@@ -3,65 +3,68 @@ import QtQuick.Layouts
 import Quickshell
 
 Rectangle {
-    id: clockContainer
+    Layout.fillHeight: true
+    Layout.fillWidth: true
+    color: "transparent"
 
-    width: hoverArea.containsMouse ? date.width + time.width + 30 : time.width + 20
-    height: parent.height
-    color: "#D3D2D2"
-    radius: 100
-    clip: true
+    Rectangle {
+        id: clockContainer
 
-    SystemClock {
-        id: clock
+        width: hoverArea.containsMouse ? date.width + time.width + 30 : time.width + 20
+        height: parent.height
+        color: "#D3D2D2"
+        radius: 100
+        clip: true
 
-        precision: SystemClock.Minutes
-    }
+        SystemClock {
+            id: clock
 
-    MouseArea {
-        id: hoverArea
+            precision: SystemClock.Minutes
+        }
 
-        anchors.fill: clockContainer
-        hoverEnabled: true
-    }
+        MouseArea {
+            id: hoverArea
 
-    RowLayout {
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.margins: 10
-        spacing: 10
+            anchors.fill: clockContainer
+            hoverEnabled: true
+        }
 
-        Text {
-            id: time
-
-            Layout.fillWidth: true
+        RowLayout {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            text: Qt.formatDateTime(clock.date, "hh:mm AP | dddd")
-            font.pixelSize: 13
-            font.family: "Segoe UI"
-            color: "black"
-            font.bold: true
+            spacing: 10
+
+            Text {
+                id: time
+
+                Layout.leftMargin: 10
+                Layout.alignment: Qt.AlignVCenter
+                text: Qt.formatDateTime(clock.date, "hh:mm AP | dddd")
+                font.pixelSize: 13
+                font.family: "Segoe UI"
+                color: "#221E1E"
+                font.bold: true
+            }
+
+            Text {
+                id: date
+
+                Layout.alignment: Qt.AlignVCenter
+                text: Qt.formatDateTime(clock.date, "MMMM dd, yyyy")
+                font.pixelSize: 13
+                font.family: "Segoe UI"
+                color: "#221E1E"
+                font.bold: true
+            }
+
         }
 
-        Text {
-            id: date
+        Behavior on width {
+            NumberAnimation {
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
 
-            Layout.fillWidth: true
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            text: Qt.formatDateTime(clock.date, "MMMM dd, yyyy")
-            font.pixelSize: 13
-            font.family: "Segoe UI"
-            color: "black"
-            font.bold: true
-        }
-
-    }
-
-    Behavior on width {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
         }
 
     }
