@@ -1,12 +1,20 @@
 import "./Components"
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Hyprland
+
 
 PanelWindow {
+    property font font: "Helvetica"
+    property color primary: "#221E1E"
+    property color secondary: "#D3D2D2"
+    property color light: "#5E5E67"
+    property color active: '#55df46'
+
+
+
     implicitHeight: 40
+
     color: "transparent"
 
     anchors {
@@ -20,62 +28,37 @@ PanelWindow {
         anchors.margins: 5
         spacing: 10
 
-        Time {
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
+        Rectangle {
             Layout.fillHeight: true
-            spacing: 2
+            Layout.fillWidth: true
+            color: "transparent"
 
-            Repeater {
-                model: 10
-
-                Rectangle {
-                    property bool focused: modelData + 1 === Hyprland.focusedWorkspace.id ? true : false
-
-                    color: workspaceMouseArea.containsMouse ? "#373737" : "transparent"
-                    Layout.fillHeight: true
-                    Layout.preferredWidth: focused ? 130 : (modelData === Hyprland.focusedWorkspace.id - 2 || modelData === Hyprland.focusedWorkspace.id) ? 60 : 10
-                    clip: true
-
-                    Rectangle {
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        radius: 60
-                        height: 4
-                        width: parent.width
-                        color: focused || workspaceMouseArea.containsMouse ? "#fff" : "#5E5E67"
-                        anchors.bottomMargin: focused ? 3 : 0
-                    }
-
-                    MouseArea {
-                        id: workspaceMouseArea
-
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onClicked: {
-                            modelData + 1 !== Hyprland.focusedWorkspace.id && (Hyprland.dispatch(`workspace ${modelData + 1}`));
-                        }
-                    }
-
-                    Behavior on Layout.preferredWidth {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutCubic
-                        }
-
-                    }
-
+            RowLayout {
+                anchors.fill: parent
+                Time {
                 }
-
             }
 
+
+
         }
+
+        Workspaces { }
 
         Rectangle {
             Layout.fillWidth: true
+            Layout.fillHeight: true
+
             color: "transparent"
+
+            RowLayout {
+                anchors.right: parent.right
+                height: parent.height
+                width: children.width
+
+
+                Sound { }
+            }
         }
 
     }
