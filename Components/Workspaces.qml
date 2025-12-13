@@ -17,7 +17,10 @@ RowLayout {
 
             color: workspaceMouseArea.containsMouse ? "#373737": "transparent"
             Layout.fillHeight: true
-            Layout.preferredWidth: focused ? 130: (modelData === Hyprland.focusedWorkspace.id - 2 || modelData === Hyprland.focusedWorkspace.id || workspaceMouseArea.containsMouse) ? 60: 15
+            Layout.preferredWidth: focused ? 130 : (
+                (Hyprland && Hyprland.focusedWorkspace && (modelData === Hyprland.focusedWorkspace.id - 2 || modelData === Hyprland.focusedWorkspace.id))
+                || workspaceMouseArea.containsMouse
+            ) ? 60 : 15
             clip: true
 
             Rectangle {

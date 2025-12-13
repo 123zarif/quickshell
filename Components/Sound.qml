@@ -49,7 +49,7 @@ Rectangle {
 
                 Image {
                     id: soundImg
-                    width: parent.fill
+                    width: parent.width
                     height: 21
                     fillMode: Image.PreserveAspectFit
                     source: "../sound.svg"
